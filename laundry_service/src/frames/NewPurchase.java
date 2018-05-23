@@ -13,6 +13,8 @@ import java.util.Date;
 import javax.swing.JFormattedTextField;
 import javax.persistence.*;
 import models.DailyExpense;
+import models.Employee;
+
 
 /**
  *
@@ -23,7 +25,9 @@ public class NewPurchase extends javax.swing.JFrame {
     /**
      * Creates new form NewPurchase
      */
-    public NewPurchase() {
+    static Employee emem;
+    public NewPurchase(Employee emp) {
+        emem = emp;
         initComponents();
     }
     
@@ -126,7 +130,7 @@ public class NewPurchase extends javax.swing.JFrame {
         itemCount = new javax.swing.JTextField();
         itemPrice = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("New Purchase");
 
@@ -237,7 +241,7 @@ public class NewPurchase extends javax.swing.JFrame {
         em.close();
     }//GEN-LAST:event_jButton1ActionPerformed
 */
-     public static void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+     public void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
         EntityManagerFactory emf =
         Persistence.createEntityManagerFactory("laundry_servicePU");
@@ -246,24 +250,34 @@ public class NewPurchase extends javax.swing.JFrame {
         em.getTransaction().begin();
         DailyExpense de = new DailyExpense();
         
+        
+                    
         de.setItemId(1);
-        de.setDescription("plastic");
+        de.setDescription(itemDesc.getText());
         java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(java.time.LocalDateTime.now());
         de.setDateAcquired(timestamp);
-        de.setPricePerItem((float) 10.5);
-        de.setQuantity(12);
-        de.setTotalPrice(100);
-        de.setEmpId(1);
+        de.setPricePerItem(Float.valueOf(itemPrice.getText()));
+        de.setQuantity(Integer.valueOf(itemCount.getText()));
+        float totalPrice = Float.valueOf(itemPrice.getText()) * Integer.valueOf(itemCount.getText());
+        de.setTotalPrice(totalPrice);
+        de.setEmpId(emem);
         
         em.persist(de);
         em.getTransaction().commit();
         em.close();
+        Expenses ex = new Expenses();
+        ex.setVisible(rootPaneCheckingEnabled);
+        ex.setEnabled(rootPaneCheckingEnabled);
+        ex.enableInputMethods(rootPaneCheckingEnabled);
+        this.setVisible(false);
+        this.dispose();
     }
     
     /**
      * @param args the command line arguments
+     * @param <error>
      */
-    public static void main(String args[]) {
+    public static void main(String args[], Employee empl) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -290,13 +304,22 @@ public class NewPurchase extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewPurchase().setVisible(true);
+                
+                new NewPurchase(empl).setVisible(true);
             }
-        });
+        });        
     }
 
+    public static javax.swing.JTextField itemCount;
+    public static javax.swing.JTextField itemDesc;
+    public static javax.swing.JTextField itemPrice;
+    public static javax.swing.JButton jButton1;
+    public static javax.swing.JLabel jLabel1;
+    public static javax.swing.JLabel jLabel2;
+    public static javax.swing.JLabel jLabel3;
+    public static javax.swing.JLabel jLabel4;
     
-    
+    /*
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField itemCount;
     private javax.swing.JTextField itemDesc;
@@ -307,4 +330,5 @@ public class NewPurchase extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
+    */
 }

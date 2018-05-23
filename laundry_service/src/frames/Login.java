@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import models.Employee;
 
@@ -22,19 +23,18 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    static  Employee superEmp = new Employee();
+    static final Employee superEmp2 = superEmp;
     public Login() {
-        initComponents();
-        
+        initComponents();        
     }
     
      public  void initComponents() {
-
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
         password = new javax.swing.JTextField();
         loginButton = new javax.swing.JButton();
-        String password = "";
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,9 +46,14 @@ public class Login extends javax.swing.JFrame {
         username.setText("Username");
 
         password.setText("Password");
-        
+       
 
         loginButton.setText("Login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,6 +126,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         loginButton.setText("Login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,9 +174,23 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordActionPerformed
 
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginButtonActionPerformed
+
+     
     /**
      * @param args the command line arguments
      */
+     public void  loginButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // TODO add your handling code here:
+         superEmp = verifyUser();
+         NewPurchase np = new NewPurchase(superEmp);
+         np.setVisible(true);   
+         this.setVisible(false);
+         this.dispose();
+    } 
+     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -199,18 +223,37 @@ public class Login extends javax.swing.JFrame {
         });
     }
     
-    public static String verifyUser(String candidate){
-        String pass = "";
+    public static Employee verifyUser(){
         
         EntityManagerFactory emf =
         Persistence.createEntityManagerFactory("laundry_servicePU");
         EntityManager em = emf.createEntityManager();
         
-        TypedQuery<Employee> findPassword = em.createNamedQuery("Employee.findByPassword", Employee.class);
-        List<Employee> results = findPassword.getResultList();
+       em.getTransaction().begin();
+       Query verifyEmployee = em.createNamedQuery("Employee.findByPassword");
+       verifyEmployee.setParameter("password", password.getText());
+       Query verifyUsername = em.createNamedQuery("Employee.findByName");
+       verifyUsername.setParameter("name", username.getText());
+       List<Employee> emp2 = verifyEmployee.getResultList();
+       List<Employee> emp1 = verifyEmployee.getResultList();
+       
+       Employee empl1 = emp1.get(0);
+       Employee empl2 = emp2.get(0);
+       
+          
+       
+       if(empl1.getEmployeeId() == empl2.getEmployeeId()){
+           System.out.println("Success");
+           superEmp = empl1;
+           System.out.println(empl1.getEmployeeId());
+       
+           em.close();
+       
+           
+       }
+       return superEmp;
+ 
         
-        
-        return pass;
     }
     
     public static javax.swing.JLabel jLabel1;
