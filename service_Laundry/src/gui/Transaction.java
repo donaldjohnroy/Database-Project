@@ -151,7 +151,7 @@ public class Transaction extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         trans_table = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setLayout(null);

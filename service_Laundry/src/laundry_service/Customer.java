@@ -6,7 +6,7 @@
 package laundry_service;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,35 +20,34 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "customer")
+@Table(catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")
-    , @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId")
-    , @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name")
-    , @NamedQuery(name = "Customer.findByContactNumber", query = "SELECT c FROM Customer c WHERE c.contactNumber = :contactNumber")
-    , @NamedQuery(name = "Customer.findByAddress", query = "SELECT c FROM Customer c WHERE c.address = :address")})
+    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
+    @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId"),
+    @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name"),
+    @NamedQuery(name = "Customer.findByContactNumber", query = "SELECT c FROM Customer c WHERE c.contactNumber = :contactNumber"),
+    @NamedQuery(name = "Customer.findByAddress", query = "SELECT c FROM Customer c WHERE c.address = :address")})
 public class Customer implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "customer_id")
+    @Column(name = "customer_id", nullable = false)
     private Integer customerId;
     @Basic(optional = false)
-    @Column(name = "name")
+    @Column(nullable = false, length = 45)
     private String name;
     @Basic(optional = false)
-    @Column(name = "contact_number")
+    @Column(name = "contact_number", nullable = false)
     private int contactNumber;
     @Basic(optional = false)
-    @Column(name = "address")
+    @Column(nullable = false, length = 45)
     private String address;
     @OneToMany(mappedBy = "customerId")
-    private Collection<LaundryInfo> laundryInfoCollection;
+    private List<LaundryInfo> laundryInfoList;
 
     public Customer() {
     }
@@ -97,12 +96,12 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public Collection<LaundryInfo> getLaundryInfoCollection() {
-        return laundryInfoCollection;
+    public List<LaundryInfo> getLaundryInfoList() {
+        return laundryInfoList;
     }
 
-    public void setLaundryInfoCollection(Collection<LaundryInfo> laundryInfoCollection) {
-        this.laundryInfoCollection = laundryInfoCollection;
+    public void setLaundryInfoList(List<LaundryInfo> laundryInfoList) {
+        this.laundryInfoList = laundryInfoList;
     }
 
     @Override
@@ -127,7 +126,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "laundry_service.Customer[ customerId=" + customerId + " ]";
+        return "models.Customer[ customerId=" + customerId + " ]";
     }
     
 }

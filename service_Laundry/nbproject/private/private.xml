@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/laundry_service/LaundryInfo.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/gui/Login.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/gui/Expenses.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/gui/AdminLaundry.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/laundry_service/ServicesAvailed.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/laundry_service/Transaction.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/laundry_service/DailyExpense.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/laundry_service/DailySales.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/laundry_service/Employee.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/gui/NewPurchase.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/laundry_service/Customer.java</file>
+            <file>file:/C:/Users/Franklin/Documents/NetBeansProjects/service_Laundry/src/gui/EmployeeLaundry.java</file>
+        </group>
     </open-files>
 </project-private>

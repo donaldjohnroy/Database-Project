@@ -6,59 +6,53 @@
 package laundry_service;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "employee")
+@Table(catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
-    , @NamedQuery(name = "Employee.findByEmployeeId", query = "SELECT e FROM Employee e WHERE e.employeeId = :employeeId")
-    , @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name")
-    , @NamedQuery(name = "Employee.findByContactNumber", query = "SELECT e FROM Employee e WHERE e.contactNumber = :contactNumber")
-    , @NamedQuery(name = "Employee.findByAddress", query = "SELECT e FROM Employee e WHERE e.address = :address")
-    , @NamedQuery(name = "Employee.findBySalary", query = "SELECT e FROM Employee e WHERE e.salary = :salary")
-    , @NamedQuery(name = "Employee.findBySummary", query = "SELECT e FROM Employee e WHERE e.summary = :summary")})
+    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
+    @NamedQuery(name = "Employee.findByEmployeeId", query = "SELECT e FROM Employee e WHERE e.employeeId = :employeeId"),
+    @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name"),
+    @NamedQuery(name = "Employee.findByContactNumber", query = "SELECT e FROM Employee e WHERE e.contactNumber = :contactNumber"),
+    @NamedQuery(name = "Employee.findByAddress", query = "SELECT e FROM Employee e WHERE e.address = :address"),
+    @NamedQuery(name = "Employee.findBySalary", query = "SELECT e FROM Employee e WHERE e.salary = :salary"),
+    @NamedQuery(name = "Employee.findBySummary", query = "SELECT e FROM Employee e WHERE e.summary = :summary"),
+    @NamedQuery(name = "Employee.findByPassword", query = "SELECT e FROM Employee e WHERE e.password = :password")})
 public class Employee implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "employee_id")
+    @Column(name = "employee_id", nullable = false)
     private Integer employeeId;
     @Basic(optional = false)
-    @Column(name = "name")
+    @Column(nullable = false, length = 45)
     private String name;
     @Basic(optional = false)
-    @Column(name = "contact_number")
+    @Column(name = "contact_number", nullable = false)
     private int contactNumber;
     @Basic(optional = false)
-    @Column(name = "address")
+    @Column(nullable = false, length = 45)
     private String address;
     @Basic(optional = false)
-    @Column(name = "salary")
+    @Column(nullable = false)
     private float salary;
-    @Column(name = "summary")
+    @Column(length = 45)
     private String summary;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empId")
-    private Collection<DailyExpense> dailyExpenseCollection;
-    @OneToMany(mappedBy = "employeeId")
-    private Collection<Transaction> transactionCollection;
+    @Column(length = 45)
+    private String password;
 
     public Employee() {
     }
@@ -123,22 +117,12 @@ public class Employee implements Serializable {
         this.summary = summary;
     }
 
-    @XmlTransient
-    public Collection<DailyExpense> getDailyExpenseCollection() {
-        return dailyExpenseCollection;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDailyExpenseCollection(Collection<DailyExpense> dailyExpenseCollection) {
-        this.dailyExpenseCollection = dailyExpenseCollection;
-    }
-
-    @XmlTransient
-    public Collection<Transaction> getTransactionCollection() {
-        return transactionCollection;
-    }
-
-    public void setTransactionCollection(Collection<Transaction> transactionCollection) {
-        this.transactionCollection = transactionCollection;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -163,7 +147,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "laundry_service.Employee[ employeeId=" + employeeId + " ]";
+        return "models.Employee[ employeeId=" + employeeId + " ]";
     }
     
 }

@@ -6,8 +6,8 @@
 package laundry_service;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,41 +25,40 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "transaction")
+@Table(catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction t")
-    , @NamedQuery(name = "Transaction.findByTransactionId", query = "SELECT t FROM Transaction t WHERE t.transactionId = :transactionId")
-    , @NamedQuery(name = "Transaction.findByDateReceived", query = "SELECT t FROM Transaction t WHERE t.dateReceived = :dateReceived")
-    , @NamedQuery(name = "Transaction.findByDateClaimed", query = "SELECT t FROM Transaction t WHERE t.dateClaimed = :dateClaimed")
-    , @NamedQuery(name = "Transaction.findByTotalAmount", query = "SELECT t FROM Transaction t WHERE t.totalAmount = :totalAmount")
-    , @NamedQuery(name = "Transaction.findByOrNumber", query = "SELECT t FROM Transaction t WHERE t.orNumber = :orNumber")})
+    @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction t"),
+    @NamedQuery(name = "Transaction.findByTransactionId", query = "SELECT t FROM Transaction t WHERE t.transactionId = :transactionId"),
+    @NamedQuery(name = "Transaction.findByDateReceived", query = "SELECT t FROM Transaction t WHERE t.dateReceived = :dateReceived"),
+    @NamedQuery(name = "Transaction.findByDateClaimed", query = "SELECT t FROM Transaction t WHERE t.dateClaimed = :dateClaimed"),
+    @NamedQuery(name = "Transaction.findByTotalAmount", query = "SELECT t FROM Transaction t WHERE t.totalAmount = :totalAmount"),
+    @NamedQuery(name = "Transaction.findByOrNumber", query = "SELECT t FROM Transaction t WHERE t.orNumber = :orNumber")})
 public class Transaction implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "transaction_id")
+    @Column(name = "transaction_id", nullable = false)
     private Integer transactionId;
     @Basic(optional = false)
-    @Column(name = "date_received")
+    @Column(name = "date_received", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateReceived;
     @Basic(optional = false)
-    @Column(name = "date_claimed")
+    @Column(name = "date_claimed", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateClaimed;
     @Basic(optional = false)
-    @Column(name = "total_amount")
+    @Column(name = "total_amount", nullable = false)
     private float totalAmount;
     @Basic(optional = false)
-    @Column(name = "or_number")
+    @Column(name = "or_number", nullable = false)
     private int orNumber;
     @OneToMany(mappedBy = "transactionId")
-    private Collection<DailySales> dailySalesCollection;
+    private List<DailySales> dailySalesList;
     @JoinColumn(name = "employee_id", referencedColumnName = "employee_id")
     @ManyToOne
     private Employee employeeId;
@@ -123,12 +122,12 @@ public class Transaction implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DailySales> getDailySalesCollection() {
-        return dailySalesCollection;
+    public List<DailySales> getDailySalesList() {
+        return dailySalesList;
     }
 
-    public void setDailySalesCollection(Collection<DailySales> dailySalesCollection) {
-        this.dailySalesCollection = dailySalesCollection;
+    public void setDailySalesList(List<DailySales> dailySalesList) {
+        this.dailySalesList = dailySalesList;
     }
 
     public Employee getEmployeeId() {
@@ -169,7 +168,7 @@ public class Transaction implements Serializable {
 
     @Override
     public String toString() {
-        return "laundry_service.Transaction[ transactionId=" + transactionId + " ]";
+        return "models.Transaction[ transactionId=" + transactionId + " ]";
     }
     
 }

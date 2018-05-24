@@ -10,7 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,47 +24,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "daily_expense")
+@Table(name = "daily_expense", catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DailyExpense.findAll", query = "SELECT d FROM DailyExpense d")
-    , @NamedQuery(name = "DailyExpense.findByItemId", query = "SELECT d FROM DailyExpense d WHERE d.itemId = :itemId")
-    , @NamedQuery(name = "DailyExpense.findByDescription", query = "SELECT d FROM DailyExpense d WHERE d.description = :description")
-    , @NamedQuery(name = "DailyExpense.findByDateAcquired", query = "SELECT d FROM DailyExpense d WHERE d.dateAcquired = :dateAcquired")
-    , @NamedQuery(name = "DailyExpense.findByQuantity", query = "SELECT d FROM DailyExpense d WHERE d.quantity = :quantity")
-    , @NamedQuery(name = "DailyExpense.findByPricePerItem", query = "SELECT d FROM DailyExpense d WHERE d.pricePerItem = :pricePerItem")
-    , @NamedQuery(name = "DailyExpense.findByTotalPrice", query = "SELECT d FROM DailyExpense d WHERE d.totalPrice = :totalPrice")
-    , @NamedQuery(name = "DailyExpense.findByDailyExpensecol", query = "SELECT d FROM DailyExpense d WHERE d.dailyExpensecol = :dailyExpensecol")})
+    @NamedQuery(name = "DailyExpense.findAll", query = "SELECT d FROM DailyExpense d"),
+    @NamedQuery(name = "DailyExpense.findByItemId", query = "SELECT d FROM DailyExpense d WHERE d.itemId = :itemId"),
+    @NamedQuery(name = "DailyExpense.findByDescription", query = "SELECT d FROM DailyExpense d WHERE d.description = :description"),
+    @NamedQuery(name = "DailyExpense.findByDateAcquired", query = "SELECT d FROM DailyExpense d WHERE d.dateAcquired = :dateAcquired"),
+    @NamedQuery(name = "DailyExpense.findByQuantity", query = "SELECT d FROM DailyExpense d WHERE d.quantity = :quantity"),
+    @NamedQuery(name = "DailyExpense.findByPricePerItem", query = "SELECT d FROM DailyExpense d WHERE d.pricePerItem = :pricePerItem"),
+    @NamedQuery(name = "DailyExpense.findByTotalPrice", query = "SELECT d FROM DailyExpense d WHERE d.totalPrice = :totalPrice")})
 public class DailyExpense implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "item_id")
+    @Column(name = "item_id", nullable = false)
     private Integer itemId;
     @Basic(optional = false)
-    @Column(name = "description")
+    @Column(nullable = false, length = 45)
     private String description;
     @Basic(optional = false)
-    @Column(name = "date_acquired")
+    @Column(name = "date_acquired", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateAcquired;
     @Basic(optional = false)
-    @Column(name = "quantity")
+    @Column(nullable = false)
     private int quantity;
     @Basic(optional = false)
-    @Column(name = "price_per_item")
+    @Column(name = "price_per_item", nullable = false)
     private float pricePerItem;
     @Basic(optional = false)
-    @Column(name = "total_price")
+    @Column(name = "total_price", nullable = false)
     private float totalPrice;
-    @Basic(optional = false)
-    @Column(name = "daily_expensecol")
-    private String dailyExpensecol;
-    @JoinColumn(name = "emp_id", referencedColumnName = "employee_id")
+    @JoinColumn(name = "emp_id", referencedColumnName = "employee_id", nullable = false)
     @ManyToOne(optional = false)
     private Employee empId;
 
@@ -74,14 +71,13 @@ public class DailyExpense implements Serializable {
         this.itemId = itemId;
     }
 
-    public DailyExpense(Integer itemId, String description, Date dateAcquired, int quantity, float pricePerItem, float totalPrice, String dailyExpensecol) {
+    public DailyExpense(Integer itemId, String description, Date dateAcquired, int quantity, float pricePerItem, float totalPrice) {
         this.itemId = itemId;
         this.description = description;
         this.dateAcquired = dateAcquired;
         this.quantity = quantity;
         this.pricePerItem = pricePerItem;
         this.totalPrice = totalPrice;
-        this.dailyExpensecol = dailyExpensecol;
     }
 
     public Integer getItemId() {
@@ -132,14 +128,6 @@ public class DailyExpense implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public String getDailyExpensecol() {
-        return dailyExpensecol;
-    }
-
-    public void setDailyExpensecol(String dailyExpensecol) {
-        this.dailyExpensecol = dailyExpensecol;
-    }
-
     public Employee getEmpId() {
         return empId;
     }
@@ -170,7 +158,11 @@ public class DailyExpense implements Serializable {
 
     @Override
     public String toString() {
-        return "laundry_service.DailyExpense[ itemId=" + itemId + " ]";
+        return "models.DailyExpense[ itemId=" + itemId + " ]";
+    }
+
+    public void setEmpId(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

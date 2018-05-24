@@ -24,30 +24,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "daily_sales")
+@Table(name = "daily_sales", catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DailySales.findAll", query = "SELECT d FROM DailySales d")
-    , @NamedQuery(name = "DailySales.findByDailySalesId", query = "SELECT d FROM DailySales d WHERE d.dailySalesId = :dailySalesId")
-    , @NamedQuery(name = "DailySales.findByDate", query = "SELECT d FROM DailySales d WHERE d.date = :date")
-    , @NamedQuery(name = "DailySales.findByTotal", query = "SELECT d FROM DailySales d WHERE d.total = :total")})
+    @NamedQuery(name = "DailySales.findAll", query = "SELECT d FROM DailySales d"),
+    @NamedQuery(name = "DailySales.findByDailySalesId", query = "SELECT d FROM DailySales d WHERE d.dailySalesId = :dailySalesId"),
+    @NamedQuery(name = "DailySales.findByDate", query = "SELECT d FROM DailySales d WHERE d.date = :date"),
+    @NamedQuery(name = "DailySales.findByTotal", query = "SELECT d FROM DailySales d WHERE d.total = :total")})
 public class DailySales implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "daily_sales_id")
+    @Column(name = "daily_sales_id", nullable = false)
     private Integer dailySalesId;
     @Basic(optional = false)
-    @Column(name = "date")
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @Basic(optional = false)
-    @Column(name = "total")
+    @Column(nullable = false)
     private float total;
     @JoinColumn(name = "transaction_id", referencedColumnName = "transaction_id")
     @ManyToOne
@@ -120,7 +119,7 @@ public class DailySales implements Serializable {
 
     @Override
     public String toString() {
-        return "laundry_service.DailySales[ dailySalesId=" + dailySalesId + " ]";
+        return "models.DailySales[ dailySalesId=" + dailySalesId + " ]";
     }
     
 }

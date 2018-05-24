@@ -125,7 +125,7 @@ public class CustInfo extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         save_btn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("New Transaction");
         setPreferredSize(new java.awt.Dimension(832, 950));
         setResizable(false);

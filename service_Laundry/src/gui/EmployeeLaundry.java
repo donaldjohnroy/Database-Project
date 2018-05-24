@@ -33,15 +33,16 @@ public class EmployeeLaundry extends javax.swing.JFrame {
         sales_btn = new javax.swing.JButton();
         quit_btn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        customer_btn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setMinimumSize(new java.awt.Dimension(800, 600));
         jPanel1.setLayout(null);
 
         transaction_btn.setBackground(new java.awt.Color(0, 153, 153));
-        transaction_btn.setFont(new java.awt.Font("Tahoma", 1, 25)); // NOI18N
+        transaction_btn.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         transaction_btn.setForeground(new java.awt.Color(255, 255, 255));
         transaction_btn.setText("View Transactions");
         transaction_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -50,17 +51,22 @@ public class EmployeeLaundry extends javax.swing.JFrame {
             }
         });
         jPanel1.add(transaction_btn);
-        transaction_btn.setBounds(240, 190, 300, 50);
+        transaction_btn.setBounds(90, 320, 220, 50);
 
         expense_btn.setBackground(new java.awt.Color(0, 153, 153));
-        expense_btn.setFont(new java.awt.Font("Tahoma", 1, 25)); // NOI18N
+        expense_btn.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         expense_btn.setForeground(new java.awt.Color(255, 255, 255));
         expense_btn.setText("View Expenses");
+        expense_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                expense_btnActionPerformed(evt);
+            }
+        });
         jPanel1.add(expense_btn);
-        expense_btn.setBounds(240, 290, 300, 50);
+        expense_btn.setBounds(440, 210, 220, 50);
 
         sales_btn.setBackground(new java.awt.Color(0, 153, 153));
-        sales_btn.setFont(new java.awt.Font("Tahoma", 1, 25)); // NOI18N
+        sales_btn.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         sales_btn.setForeground(new java.awt.Color(255, 255, 255));
         sales_btn.setText("View Daily Sales");
         sales_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -69,7 +75,7 @@ public class EmployeeLaundry extends javax.swing.JFrame {
             }
         });
         jPanel1.add(sales_btn);
-        sales_btn.setBounds(240, 390, 300, 50);
+        sales_btn.setBounds(440, 320, 220, 50);
 
         quit_btn.setBackground(new java.awt.Color(0, 153, 153));
         quit_btn.setFont(new java.awt.Font("Tahoma", 1, 25)); // NOI18N
@@ -81,13 +87,25 @@ public class EmployeeLaundry extends javax.swing.JFrame {
             }
         });
         jPanel1.add(quit_btn);
-        quit_btn.setBounds(240, 490, 300, 50);
+        quit_btn.setBounds(260, 460, 220, 50);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("BUBBLE WASH LAUNDRY SERVICES");
         jPanel1.add(jLabel1);
         jLabel1.setBounds(70, 20, 660, 80);
+
+        customer_btn.setBackground(new java.awt.Color(0, 153, 153));
+        customer_btn.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        customer_btn.setForeground(new java.awt.Color(255, 255, 255));
+        customer_btn.setText("View Customer");
+        customer_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customer_btnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(customer_btn);
+        customer_btn.setBounds(90, 210, 220, 50);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,7 +124,7 @@ public class EmployeeLaundry extends javax.swing.JFrame {
     private void transaction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transaction_btnActionPerformed
         // TODO add your handling code here:
         new Transaction().setVisible(true);
-        this.setVisible(false);
+        
     }//GEN-LAST:event_transaction_btnActionPerformed
 
     private void quit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quit_btnActionPerformed
@@ -120,10 +138,22 @@ public class EmployeeLaundry extends javax.swing.JFrame {
 
     private void sales_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sales_btnActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+        
         new Sales().setVisible(true);
         
     }//GEN-LAST:event_sales_btnActionPerformed
+
+    private void expense_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expense_btnActionPerformed
+        // TODO add your handling code here:
+        
+        new Expenses().setVisible(true);
+    }//GEN-LAST:event_expense_btnActionPerformed
+
+    private void customer_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customer_btnActionPerformed
+        // TODO add your handling code here:
+        
+        new Customer().setVisible(true);
+    }//GEN-LAST:event_customer_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,6 +196,7 @@ public class EmployeeLaundry extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton customer_btn;
     private javax.swing.JButton expense_btn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
