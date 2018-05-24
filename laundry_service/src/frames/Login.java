@@ -11,7 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import models.Employee;
+import laundry_service.Employee;
 
 
 /**
@@ -236,6 +236,9 @@ public class Login extends javax.swing.JFrame {
        verifyUsername.setParameter("name", username.getText());
        List<Employee> emp2 = verifyEmployee.getResultList();
        List<Employee> emp1 = verifyEmployee.getResultList();
+       
+       if(emp1.isEmpty())
+            System.out.println("EMPOTYASGAGAESGWEGWE POTASAAA");
        
        Employee empl1 = emp1.get(0);
        Employee empl2 = emp2.get(0);

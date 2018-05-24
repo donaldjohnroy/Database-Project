@@ -6,7 +6,7 @@
 package laundry_service;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,48 +20,37 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "customer")
+@Table(name = "customer", catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")
-    , @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId")
-    , @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name")
-    , @NamedQuery(name = "Customer.findByContactNumber", query = "SELECT c FROM Customer c WHERE c.contactNumber = :contactNumber")
-    , @NamedQuery(name = "Customer.findByAddress", query = "SELECT c FROM Customer c WHERE c.address = :address")})
+    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
+    @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId"),
+    @NamedQuery(name = "Customer.findByAddress", query = "SELECT c FROM Customer c WHERE c.address = :address"),
+    @NamedQuery(name = "Customer.findByContactNumber", query = "SELECT c FROM Customer c WHERE c.contactNumber = :contactNumber"),
+    @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name")})
 public class Customer implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "customer_id")
+    @Column(name = "customer_id", nullable = false)
     private Integer customerId;
-    @Basic(optional = false)
-    @Column(name = "name")
-    private String name;
-    @Basic(optional = false)
-    @Column(name = "contact_number")
-    private int contactNumber;
-    @Basic(optional = false)
-    @Column(name = "address")
+    @Column(name = "address", length = 255)
     private String address;
+    @Column(name = "contact_number")
+    private Integer contactNumber;
+    @Column(name = "name", length = 255)
+    private String name;
     @OneToMany(mappedBy = "customerId")
-    private Collection<LaundryInfo> laundryInfoCollection;
+    private List<LaundryInfo> laundryInfoList;
 
     public Customer() {
     }
 
     public Customer(Integer customerId) {
         this.customerId = customerId;
-    }
-
-    public Customer(Integer customerId, String name, int contactNumber, String address) {
-        this.customerId = customerId;
-        this.name = name;
-        this.contactNumber = contactNumber;
-        this.address = address;
     }
 
     public Integer getCustomerId() {
@@ -72,22 +61,6 @@ public class Customer implements Serializable {
         this.customerId = customerId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(int contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -96,13 +69,29 @@ public class Customer implements Serializable {
         this.address = address;
     }
 
-    @XmlTransient
-    public Collection<LaundryInfo> getLaundryInfoCollection() {
-        return laundryInfoCollection;
+    public Integer getContactNumber() {
+        return contactNumber;
     }
 
-    public void setLaundryInfoCollection(Collection<LaundryInfo> laundryInfoCollection) {
-        this.laundryInfoCollection = laundryInfoCollection;
+    public void setContactNumber(Integer contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlTransient
+    public List<LaundryInfo> getLaundryInfoList() {
+        return laundryInfoList;
+    }
+
+    public void setLaundryInfoList(List<LaundryInfo> laundryInfoList) {
+        this.laundryInfoList = laundryInfoList;
     }
 
     @Override

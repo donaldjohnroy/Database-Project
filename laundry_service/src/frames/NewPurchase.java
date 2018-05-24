@@ -12,8 +12,8 @@ import static java.time.temporal.TemporalQueries.localDate;
 import java.util.Date;
 import javax.swing.JFormattedTextField;
 import javax.persistence.*;
-import models.DailyExpense;
-import models.Employee;
+import laundry_service.DailyExpense;
+import laundry_service.Employee;
 
 
 /**

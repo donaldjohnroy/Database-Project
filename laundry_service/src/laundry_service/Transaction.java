@@ -6,8 +6,8 @@
 package laundry_service;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,41 +25,37 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "transaction")
+@Table(name = "transaction", catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction t")
-    , @NamedQuery(name = "Transaction.findByTransactionId", query = "SELECT t FROM Transaction t WHERE t.transactionId = :transactionId")
-    , @NamedQuery(name = "Transaction.findByDateReceived", query = "SELECT t FROM Transaction t WHERE t.dateReceived = :dateReceived")
-    , @NamedQuery(name = "Transaction.findByDateClaimed", query = "SELECT t FROM Transaction t WHERE t.dateClaimed = :dateClaimed")
-    , @NamedQuery(name = "Transaction.findByTotalAmount", query = "SELECT t FROM Transaction t WHERE t.totalAmount = :totalAmount")
-    , @NamedQuery(name = "Transaction.findByOrNumber", query = "SELECT t FROM Transaction t WHERE t.orNumber = :orNumber")})
+    @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction t"),
+    @NamedQuery(name = "Transaction.findByTransactionId", query = "SELECT t FROM Transaction t WHERE t.transactionId = :transactionId"),
+    @NamedQuery(name = "Transaction.findByDateClaimed", query = "SELECT t FROM Transaction t WHERE t.dateClaimed = :dateClaimed"),
+    @NamedQuery(name = "Transaction.findByDateReceived", query = "SELECT t FROM Transaction t WHERE t.dateReceived = :dateReceived"),
+    @NamedQuery(name = "Transaction.findByOrNumber", query = "SELECT t FROM Transaction t WHERE t.orNumber = :orNumber"),
+    @NamedQuery(name = "Transaction.findByTotalAmount", query = "SELECT t FROM Transaction t WHERE t.totalAmount = :totalAmount")})
 public class Transaction implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "transaction_id")
+    @Column(name = "transaction_id", nullable = false)
     private Integer transactionId;
-    @Basic(optional = false)
-    @Column(name = "date_received")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateReceived;
-    @Basic(optional = false)
     @Column(name = "date_claimed")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateClaimed;
-    @Basic(optional = false)
-    @Column(name = "total_amount")
-    private float totalAmount;
-    @Basic(optional = false)
+    @Column(name = "date_received")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateReceived;
     @Column(name = "or_number")
-    private int orNumber;
+    private Integer orNumber;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "total_amount", precision = 12)
+    private Float totalAmount;
     @OneToMany(mappedBy = "transactionId")
-    private Collection<DailySales> dailySalesCollection;
+    private List<DailySales> dailySalesList;
     @JoinColumn(name = "employee_id", referencedColumnName = "employee_id")
     @ManyToOne
     private Employee employeeId;
@@ -74,28 +70,12 @@ public class Transaction implements Serializable {
         this.transactionId = transactionId;
     }
 
-    public Transaction(Integer transactionId, Date dateReceived, Date dateClaimed, float totalAmount, int orNumber) {
-        this.transactionId = transactionId;
-        this.dateReceived = dateReceived;
-        this.dateClaimed = dateClaimed;
-        this.totalAmount = totalAmount;
-        this.orNumber = orNumber;
-    }
-
     public Integer getTransactionId() {
         return transactionId;
     }
 
     public void setTransactionId(Integer transactionId) {
         this.transactionId = transactionId;
-    }
-
-    public Date getDateReceived() {
-        return dateReceived;
-    }
-
-    public void setDateReceived(Date dateReceived) {
-        this.dateReceived = dateReceived;
     }
 
     public Date getDateClaimed() {
@@ -106,29 +86,37 @@ public class Transaction implements Serializable {
         this.dateClaimed = dateClaimed;
     }
 
-    public float getTotalAmount() {
-        return totalAmount;
+    public Date getDateReceived() {
+        return dateReceived;
     }
 
-    public void setTotalAmount(float totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setDateReceived(Date dateReceived) {
+        this.dateReceived = dateReceived;
     }
 
-    public int getOrNumber() {
+    public Integer getOrNumber() {
         return orNumber;
     }
 
-    public void setOrNumber(int orNumber) {
+    public void setOrNumber(Integer orNumber) {
         this.orNumber = orNumber;
     }
 
-    @XmlTransient
-    public Collection<DailySales> getDailySalesCollection() {
-        return dailySalesCollection;
+    public Float getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setDailySalesCollection(Collection<DailySales> dailySalesCollection) {
-        this.dailySalesCollection = dailySalesCollection;
+    public void setTotalAmount(Float totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    @XmlTransient
+    public List<DailySales> getDailySalesList() {
+        return dailySalesList;
+    }
+
+    public void setDailySalesList(List<DailySales> dailySalesList) {
+        this.dailySalesList = dailySalesList;
     }
 
     public Employee getEmployeeId() {

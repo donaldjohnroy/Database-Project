@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import models.DailyExpense;
+import laundry_service.DailyExpense;
 import javax.persistence.*;
 import javax.swing.table.DefaultTableModel;
-import models.DailyExpense;
+import laundry_service.DailyExpense;
+
 
 /**
  *
@@ -223,10 +224,9 @@ public class Expenses extends javax.swing.JFrame {
     public void purchaseButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here:
         Login l = new Login();
-        l.setVisible(rootPaneCheckingEnabled);
         this.setVisible(false);
         this.dispose();
-        
+        l.setVisible(rootPaneCheckingEnabled);          
     } 
     
     public static void main(String args[]) {

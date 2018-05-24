@@ -24,31 +24,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "daily_sales")
+@Table(name = "daily_sales", catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DailySales.findAll", query = "SELECT d FROM DailySales d")
-    , @NamedQuery(name = "DailySales.findByDailySalesId", query = "SELECT d FROM DailySales d WHERE d.dailySalesId = :dailySalesId")
-    , @NamedQuery(name = "DailySales.findByDate", query = "SELECT d FROM DailySales d WHERE d.date = :date")
-    , @NamedQuery(name = "DailySales.findByTotal", query = "SELECT d FROM DailySales d WHERE d.total = :total")})
+    @NamedQuery(name = "DailySales.findAll", query = "SELECT d FROM DailySales d"),
+    @NamedQuery(name = "DailySales.findByDailySalesId", query = "SELECT d FROM DailySales d WHERE d.dailySalesId = :dailySalesId"),
+    @NamedQuery(name = "DailySales.findByDate", query = "SELECT d FROM DailySales d WHERE d.date = :date"),
+    @NamedQuery(name = "DailySales.findByTotal", query = "SELECT d FROM DailySales d WHERE d.total = :total")})
 public class DailySales implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "daily_sales_id")
+    @Column(name = "daily_sales_id", nullable = false)
     private Integer dailySalesId;
-    @Basic(optional = false)
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @Basic(optional = false)
-    @Column(name = "total")
-    private float total;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "total", precision = 12)
+    private Float total;
     @JoinColumn(name = "transaction_id", referencedColumnName = "transaction_id")
     @ManyToOne
     private Transaction transactionId;
@@ -58,12 +56,6 @@ public class DailySales implements Serializable {
 
     public DailySales(Integer dailySalesId) {
         this.dailySalesId = dailySalesId;
-    }
-
-    public DailySales(Integer dailySalesId, Date date, float total) {
-        this.dailySalesId = dailySalesId;
-        this.date = date;
-        this.total = total;
     }
 
     public Integer getDailySalesId() {
@@ -82,11 +74,11 @@ public class DailySales implements Serializable {
         this.date = date;
     }
 
-    public float getTotal() {
+    public Float getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(Float total) {
         this.total = total;
     }
 

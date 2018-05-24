@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,48 +22,42 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "daily_expense")
+@Table(name = "daily_expense", catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DailyExpense.findAll", query = "SELECT d FROM DailyExpense d")
-    , @NamedQuery(name = "DailyExpense.findByItemId", query = "SELECT d FROM DailyExpense d WHERE d.itemId = :itemId")
-    , @NamedQuery(name = "DailyExpense.findByDescription", query = "SELECT d FROM DailyExpense d WHERE d.description = :description")
-    , @NamedQuery(name = "DailyExpense.findByDateAcquired", query = "SELECT d FROM DailyExpense d WHERE d.dateAcquired = :dateAcquired")
-    , @NamedQuery(name = "DailyExpense.findByQuantity", query = "SELECT d FROM DailyExpense d WHERE d.quantity = :quantity")
-    , @NamedQuery(name = "DailyExpense.findByPricePerItem", query = "SELECT d FROM DailyExpense d WHERE d.pricePerItem = :pricePerItem")
-    , @NamedQuery(name = "DailyExpense.findByTotalPrice", query = "SELECT d FROM DailyExpense d WHERE d.totalPrice = :totalPrice")
-    , @NamedQuery(name = "DailyExpense.findByDailyExpensecol", query = "SELECT d FROM DailyExpense d WHERE d.dailyExpensecol = :dailyExpensecol")})
+    @NamedQuery(name = "DailyExpense.findAll", query = "SELECT d FROM DailyExpense d"),
+    @NamedQuery(name = "DailyExpense.findByItemId", query = "SELECT d FROM DailyExpense d WHERE d.itemId = :itemId"),
+    @NamedQuery(name = "DailyExpense.findByDailyExpensecol", query = "SELECT d FROM DailyExpense d WHERE d.dailyExpensecol = :dailyExpensecol"),
+    @NamedQuery(name = "DailyExpense.findByDateAcquired", query = "SELECT d FROM DailyExpense d WHERE d.dateAcquired = :dateAcquired"),
+    @NamedQuery(name = "DailyExpense.findByDescription", query = "SELECT d FROM DailyExpense d WHERE d.description = :description"),
+    @NamedQuery(name = "DailyExpense.findByPricePerItem", query = "SELECT d FROM DailyExpense d WHERE d.pricePerItem = :pricePerItem"),
+    @NamedQuery(name = "DailyExpense.findByQuantity", query = "SELECT d FROM DailyExpense d WHERE d.quantity = :quantity"),
+    @NamedQuery(name = "DailyExpense.findByTotalPrice", query = "SELECT d FROM DailyExpense d WHERE d.totalPrice = :totalPrice")})
 public class DailyExpense implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "item_id")
+    @Column(name = "item_id", nullable = false)
     private Integer itemId;
-    @Basic(optional = false)
-    @Column(name = "description")
-    private String description;
-    @Basic(optional = false)
+    @Column(name = "daily_expensecol", length = 255)
+    private String dailyExpensecol;
     @Column(name = "date_acquired")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateAcquired;
-    @Basic(optional = false)
+    @Column(name = "description", length = 255)
+    private String description;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "price_per_item", precision = 12)
+    private Float pricePerItem;
     @Column(name = "quantity")
-    private int quantity;
-    @Basic(optional = false)
-    @Column(name = "price_per_item")
-    private float pricePerItem;
-    @Basic(optional = false)
-    @Column(name = "total_price")
-    private float totalPrice;
-    @Basic(optional = false)
-    @Column(name = "daily_expensecol")
-    private String dailyExpensecol;
+    private Integer quantity;
+    @Column(name = "total_price", precision = 12)
+    private Float totalPrice;
     @JoinColumn(name = "emp_id", referencedColumnName = "employee_id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Employee empId;
 
     public DailyExpense() {
@@ -72,16 +65,6 @@ public class DailyExpense implements Serializable {
 
     public DailyExpense(Integer itemId) {
         this.itemId = itemId;
-    }
-
-    public DailyExpense(Integer itemId, String description, Date dateAcquired, int quantity, float pricePerItem, float totalPrice, String dailyExpensecol) {
-        this.itemId = itemId;
-        this.description = description;
-        this.dateAcquired = dateAcquired;
-        this.quantity = quantity;
-        this.pricePerItem = pricePerItem;
-        this.totalPrice = totalPrice;
-        this.dailyExpensecol = dailyExpensecol;
     }
 
     public Integer getItemId() {
@@ -92,12 +75,12 @@ public class DailyExpense implements Serializable {
         this.itemId = itemId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDailyExpensecol() {
+        return dailyExpensecol;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDailyExpensecol(String dailyExpensecol) {
+        this.dailyExpensecol = dailyExpensecol;
     }
 
     public Date getDateAcquired() {
@@ -108,36 +91,36 @@ public class DailyExpense implements Serializable {
         this.dateAcquired = dateAcquired;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getDescription() {
+        return description;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public float getPricePerItem() {
+    public Float getPricePerItem() {
         return pricePerItem;
     }
 
-    public void setPricePerItem(float pricePerItem) {
+    public void setPricePerItem(Float pricePerItem) {
         this.pricePerItem = pricePerItem;
     }
 
-    public float getTotalPrice() {
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Float getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(Float totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public String getDailyExpensecol() {
-        return dailyExpensecol;
-    }
-
-    public void setDailyExpensecol(String dailyExpensecol) {
-        this.dailyExpensecol = dailyExpensecol;
     }
 
     public Employee getEmpId() {

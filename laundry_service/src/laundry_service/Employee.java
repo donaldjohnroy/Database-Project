@@ -6,9 +6,8 @@
 package laundry_service;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,58 +20,49 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Franklin
+ * @author DJ
  */
 @Entity
-@Table(name = "employee")
+@Table(name = "employee", catalog = "laundry_service", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
-    , @NamedQuery(name = "Employee.findByEmployeeId", query = "SELECT e FROM Employee e WHERE e.employeeId = :employeeId")
-    , @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name")
-    , @NamedQuery(name = "Employee.findByContactNumber", query = "SELECT e FROM Employee e WHERE e.contactNumber = :contactNumber")
-    , @NamedQuery(name = "Employee.findByAddress", query = "SELECT e FROM Employee e WHERE e.address = :address")
-    , @NamedQuery(name = "Employee.findBySalary", query = "SELECT e FROM Employee e WHERE e.salary = :salary")
-    , @NamedQuery(name = "Employee.findBySummary", query = "SELECT e FROM Employee e WHERE e.summary = :summary")})
+    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
+    @NamedQuery(name = "Employee.findByEmployeeId", query = "SELECT e FROM Employee e WHERE e.employeeId = :employeeId"),
+    @NamedQuery(name = "Employee.findByAddress", query = "SELECT e FROM Employee e WHERE e.address = :address"),
+    @NamedQuery(name = "Employee.findByContactNumber", query = "SELECT e FROM Employee e WHERE e.contactNumber = :contactNumber"),
+    @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name"),
+    @NamedQuery(name = "Employee.findByPassword", query = "SELECT e FROM Employee e WHERE e.password = :password"),
+    @NamedQuery(name = "Employee.findBySalary", query = "SELECT e FROM Employee e WHERE e.salary = :salary"),
+    @NamedQuery(name = "Employee.findBySummary", query = "SELECT e FROM Employee e WHERE e.summary = :summary")})
 public class Employee implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "employee_id")
+    @Column(name = "employee_id", nullable = false)
     private Integer employeeId;
-    @Basic(optional = false)
-    @Column(name = "name")
-    private String name;
-    @Basic(optional = false)
-    @Column(name = "contact_number")
-    private int contactNumber;
-    @Basic(optional = false)
-    @Column(name = "address")
+    @Column(name = "address", length = 255)
     private String address;
-    @Basic(optional = false)
-    @Column(name = "salary")
-    private float salary;
-    @Column(name = "summary")
+    @Column(name = "contact_number")
+    private Integer contactNumber;
+    @Column(name = "name", length = 255)
+    private String name;
+    @Column(name = "password", length = 45)
+    private String password;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "salary", precision = 12)
+    private Float salary;
+    @Column(name = "summary", length = 255)
     private String summary;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empId")
-    private Collection<DailyExpense> dailyExpenseCollection;
+    @OneToMany(mappedBy = "empId")
+    private List<DailyExpense> dailyExpenseList;
     @OneToMany(mappedBy = "employeeId")
-    private Collection<Transaction> transactionCollection;
+    private List<Transaction> transactionList;
 
     public Employee() {
     }
 
     public Employee(Integer employeeId) {
         this.employeeId = employeeId;
-    }
-
-    public Employee(Integer employeeId, String name, int contactNumber, String address, float salary) {
-        this.employeeId = employeeId;
-        this.name = name;
-        this.contactNumber = contactNumber;
-        this.address = address;
-        this.salary = salary;
     }
 
     public Integer getEmployeeId() {
@@ -83,22 +73,6 @@ public class Employee implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(int contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -107,11 +81,35 @@ public class Employee implements Serializable {
         this.address = address;
     }
 
-    public float getSalary() {
+    public Integer getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(Integer contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Float getSalary() {
         return salary;
     }
 
-    public void setSalary(float salary) {
+    public void setSalary(Float salary) {
         this.salary = salary;
     }
 
@@ -124,21 +122,21 @@ public class Employee implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DailyExpense> getDailyExpenseCollection() {
-        return dailyExpenseCollection;
+    public List<DailyExpense> getDailyExpenseList() {
+        return dailyExpenseList;
     }
 
-    public void setDailyExpenseCollection(Collection<DailyExpense> dailyExpenseCollection) {
-        this.dailyExpenseCollection = dailyExpenseCollection;
+    public void setDailyExpenseList(List<DailyExpense> dailyExpenseList) {
+        this.dailyExpenseList = dailyExpenseList;
     }
 
     @XmlTransient
-    public Collection<Transaction> getTransactionCollection() {
-        return transactionCollection;
+    public List<Transaction> getTransactionList() {
+        return transactionList;
     }
 
-    public void setTransactionCollection(Collection<Transaction> transactionCollection) {
-        this.transactionCollection = transactionCollection;
+    public void setTransactionList(List<Transaction> transactionList) {
+        this.transactionList = transactionList;
     }
 
     @Override

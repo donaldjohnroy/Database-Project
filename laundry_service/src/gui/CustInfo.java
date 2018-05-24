@@ -738,7 +738,7 @@ public class CustInfo extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new Transaction().setVisible(true);
+        new Transactions().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void nameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameFieldKeyTyped

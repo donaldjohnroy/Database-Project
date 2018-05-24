@@ -13,7 +13,6 @@ package laundry_service;
 
 import javax.persistence.*;
 import java.util.*;
-import models.Customer;
 
 public class Laundry_service {
 
