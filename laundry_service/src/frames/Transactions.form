@@ -23,12 +23,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="809" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" min="-2" pref="940" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="569" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" min="-2" pref="569" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -62,7 +62,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="300" y="10" width="200" height="-1"/>
+              <AbsoluteConstraints x="380" y="10" width="200" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -78,7 +78,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="90" y="390" width="140" height="40"/>
+              <AbsoluteConstraints x="20" y="390" width="140" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -97,7 +97,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="550" y="390" width="140" height="40"/>
+              <AbsoluteConstraints x="780" y="390" width="140" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -107,7 +107,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="20" y="50" width="770" height="330"/>
+              <AbsoluteConstraints x="20" y="50" width="910" height="330"/>
             </Constraint>
           </Constraints>
 
@@ -116,16 +116,18 @@
             <Component class="javax.swing.JTable" name="transac_table">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="4">
-                    <Column editable="true" title="Transaction ID" type="java.lang.Object"/>
-                    <Column editable="true" title="Date received" type="java.lang.Object"/>
-                    <Column editable="true" title="Date claimed" type="java.lang.Object"/>
+                  <Table columnCount="8" rowCount="4">
+                    <Column editable="false" title="Transaction ID" type="java.lang.Object"/>
+                    <Column editable="false" title="Customer" type="java.lang.Object"/>
+                    <Column editable="false" title="Date received" type="java.lang.Object"/>
+                    <Column editable="false" title="Date claimed" type="java.lang.Object"/>
                     <Column editable="true" title="Total amount" type="java.lang.Object"/>
-                    <Column editable="true" title="OR number" type="java.lang.Object"/>
-                    <Column editable="true" title="Services" type="java.lang.Object"/>
-                    <Column editable="true" title="Employee-on-duty" type="java.lang.Object"/>
+                    <Column editable="false" title="OR number" type="java.lang.Object"/>
+                    <Column editable="false" title="Services" type="java.lang.Object"/>
+                    <Column editable="false" title="Employee-on-duty" type="java.lang.Object"/>
                   </Table>
                 </Property>
+                <Property name="columnSelectionAllowed" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="transac_tableMousePressed"/>
@@ -133,6 +135,32 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="claimbutton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Claim"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="claimbuttonActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="190" y="390" width="130" height="40"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="remove">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Remove Entry"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="560" y="390" width="140" height="40"/>
+            </Constraint>
+          </Constraints>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

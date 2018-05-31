@@ -361,6 +361,7 @@ public class CustInfo extends javax.swing.JFrame {
         int  n = rand.nextInt(100000) + 1;
         int m = rand.nextInt(100000) + 1;
         int l = rand.nextInt(100000) + 1;
+        int totprice = 0;
         
         Employee elp = new Employee();
         
@@ -386,31 +387,50 @@ public class CustInfo extends javax.swing.JFrame {
         li.setColoredQuantity((Integer) csq.getValue());
         li.setColoredWeight(Float.valueOf(csw.getValue().toString()));
         li.setWhitesQuantity((Integer) wsq.getValue());
-        li.setWhitesWeight(Float.valueOf(wsq.getValue().toString()));
+        li.setWhitesWeight(Float.valueOf(wsw.getValue().toString()));
         li.setBedsheetQuantity((Integer) bsq.getValue());
         li.setBedsheetWeight(Float.valueOf(bsw.getValue().toString()));
         li.setBlanketQuantity(Integer.valueOf(blsq.getValue().toString()));
         li.setBlanketWeight(Float.valueOf(blsw.getValue().toString()));
-        li.setJeansQuantity(Integer.valueOf(jsw.getValue().toString()));
+        li.setJeansQuantity(Integer.valueOf(jsq.getValue().toString()));
         li.setJeansWeight(Float.valueOf(jsw.getValue().toString()));
         sa.setLaundryId(li);
         sa.setServiceId(l);
-        if(coloredcheck.isSelected())
+        if(coloredcheck.isSelected()){
+            System.out.println("COLORED SEELCTED");
             sa.setColored(s);
-        if(whitescheck.isSelected())
-            sa.setColored(s);
-        if(heavycheck.isSelected())
-            sa.setColored(s);
-        if(drycheck.isSelected())
-            sa.setColored(s);
-        if(ironcheck.isSelected())
-            sa.setColored(s);
-        if(rushcheck.isSelected())
-            sa.setColored(s);
-        if(pickupcheck.isSelected())
-            sa.setColored(s);
-        if(deliverycheck.isSelected())
-            sa.setColored(s);
+            totprice += Integer.valueOf(csw.getValue().toString()) * 8;
+        }
+        if(whitescheck.isSelected()){
+            System.out.println("WHITE SEELCTED");
+            sa.setWhites(s);
+            totprice += Integer.valueOf(wsw.getValue().toString()) * 10;
+        }
+        if(heavycheck.isSelected()){
+            sa.setHeavy(s);
+            totprice += Integer.valueOf(bsw.getValue().toString()) * 20;
+            totprice += Integer.valueOf(blsw.getValue().toString()) * 15;
+        }
+        if(drycheck.isSelected()){
+            sa.setDryClean(s);
+            totprice += 80;
+        }
+        if(ironcheck.isSelected()){
+            sa.setIron(s);
+            totprice += 50;
+        }
+        if(rushcheck.isSelected()){
+            sa.setRush(s);
+            totprice += 50;
+        }
+        if(pickupcheck.isSelected()){
+            sa.setPickup(s);
+            totprice += 30;
+        }
+        if(deliverycheck.isSelected()){
+            sa.setDelivery(s);
+            totprice += 30;
+        }
         java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(java.time.LocalDateTime.now());
         tr.setDateReceived(timestamp);
         tr.setTransactionId(n);
@@ -418,7 +438,7 @@ public class CustInfo extends javax.swing.JFrame {
         tr.setDateClaimed(null);
         tr.setOrNumber(null);
         tr.setServicesId(sa);
-        tr.setTotalAmount(Float.valueOf(1000));
+        tr.setTotalAmount(Float.valueOf(totprice));
         
         em.persist(elp);
         em.persist(c);
